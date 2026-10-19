@@ -49,7 +49,7 @@ namespace mahjong
             b.Click += Tessera_Click; //controllo del click
 
 
-            //posizione nella grafica
+            //posizione nella grafica delle tessere nonche bottoni
             Canvas.SetLeft(b, x * 50);
             Canvas.SetTop(b, y * 70);
             Panel.SetZIndex(b, z);
