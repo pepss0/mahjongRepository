@@ -31,7 +31,7 @@ namespace mahjong
 
         }
 
-        public void creaTessera(int x, int y, int z, string tipo) //creazione di una tessera nella grafica
+        public void creaTessera(float x, float y, int z, string tipo) //creazione di una tessera nella grafica
         {
             MahjongTile tessera = new MahjongTile(x, y, z, tipo);
 
@@ -39,11 +39,14 @@ namespace mahjong
             {
                 Width = 50,
                 Height = 70,
-                Content = tipo, //contenuto della tessera (dragone, bamboo ecc) 
-                Tag = tessera //associa l'oggetto logico al bottone per poterlo recuperare durante il click, permette al bottone cliccato di sapere qualè la sua tessera
-
+                Tag = tessera,
+                Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("https://images.vexels.com/media/users/3/268473/isolated/preview/36cd41604a25199f095ccd260a693a9c-mahjong-six-of-dots-tile.png", UriKind.Absolute)), // Inserisci il percorso dell'immagine
+                    Width = 40,
+                    Height = 40
+                }
             };
-
 
             tessera.BottoneUI = b; //permette alla tessera di "sapere" qual è il suo bottone sullo schermo
             b.Click += Tessera_Click; //controllo del click
@@ -153,7 +156,7 @@ namespace mahjong
 
         private void CreaLivelloDiTest()
         {
-            creaTessera(2, 1, 0, "Bambu1");
+            creaTessera(2.5f, 1.5f, 1, "Bambu1");
             creaTessera(4, 1, 0, "Bambu1");
             creaTessera(6, 1, 0, "Cerchio3");
             creaTessera(8, 1, 0, "Cerchio3");
@@ -192,14 +195,14 @@ namespace mahjong
         }
         public class MahjongTile
         {
-            private int x;
-            private int y;
+            private float x;
+            private float y;
             private int z;
             private string tipo;
             public bool isSelezionata = false;
             public Button BottoneUI;
 
-            public MahjongTile(int x, int y, int z, string tipo)
+            public MahjongTile(float x, float y, int z, string tipo)
             {
                 this.x = x;
                 this.y = y;
@@ -211,11 +214,11 @@ namespace mahjong
             {
                 return this.tipo;
             }
-            public int getX()
+            public float getX()
             {
                 return this.x;
             }
-            public int getY()
+            public float getY()
             {
                 return this.y;
             }
