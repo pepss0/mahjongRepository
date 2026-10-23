@@ -54,7 +54,7 @@ namespace mahjong
             Canvas.SetTop(b, y * 70);
             Panel.SetZIndex(b, z);
 
-            TavoloDiGioco.Children.Add(b); //disegna nella grafica
+            TavoloDiGioco.Children.Add(b); //disegna nella grafica le tessere, nonche i bottoni creati
         }
 
         public bool isFree(MahjongTile t)
