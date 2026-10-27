@@ -31,33 +31,42 @@ namespace mahjong
 
         }
 
-        public void creaTessera(float x, float y, int z, string tipo) //creazione di una tessera nella grafica
+        public void creaTessera(float x, float y, int z, String immagine) //creazione di una tessera nella grafica
         {
-            MahjongTile tessera = new MahjongTile(x, y, z, tipo);
+            MahjongTile tessera = new MahjongTile(x, y, z, immagine);
+            
+            // 1. Crea e carica la bitmap (come in precedenza)
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(immagine, UriKind.Absolute);
+            bitmap.EndInit();
 
-            Button b = new Button()
+            // 2. Crea un controllo Image e assegna la bitmap come sorgente
+            Image imgControl = new Image();
+            imgControl.Source = bitmap;
+            imgControl.Width = 50;  // Opzionale: ridimensiona per adattarla al bottone
+            imgControl.Height = 70;
+
+            Button MyButton = new Button()
             {
                 Width = 50,
-                Height = 70,
-                Tag = tessera,
-                Content = new Image
-                {
-                    Source = new BitmapImage(new Uri("https://images.vexels.com/media/users/3/268473/isolated/preview/36cd41604a25199f095ccd260a693a9c-mahjong-six-of-dots-tile.png", UriKind.Absolute)), // Inserisci il percorso dell'immagine
-                    Width = 40,
-                    Height = 40
-                }
+                Height = 60,
+                Background = Brushes.Transparent,
+                BorderBrush = Brushes.Transparent,
+                Content = imgControl,
+                Tag = tessera
             };
 
-            tessera.BottoneUI = b; //permette alla tessera di "sapere" qual è il suo bottone sullo schermo
-            b.Click += Tessera_Click; //controllo del click
+            tessera.BottoneUI = MyButton;
 
+            MyButton.Click += Tessera_Click; //ricordati di questo, è l'eventio fatto al click, senza questo ovviamente non succedera nulla
 
             //posizione nella grafica delle tessere nonche bottoni
-            Canvas.SetLeft(b, x * 50);
-            Canvas.SetTop(b, y * 70);
-            Panel.SetZIndex(b, z);
+            Canvas.SetLeft(MyButton, x * 40);
+            Canvas.SetTop(MyButton, y * 60);
+            Panel.SetZIndex(MyButton, z);
 
-            TavoloDiGioco.Children.Add(b); //disegna nella grafica le tessere, nonche i bottoni creati
+            TavoloDiGioco.Children.Add(MyButton); //disegna nella grafica le tessere, nonche i bottoni creati
         }
 
         public bool isFree(MahjongTile t)
@@ -156,42 +165,11 @@ namespace mahjong
 
         private void CreaLivelloDiTest()
         {
-            creaTessera(2.5f, 1.5f, 1, "Bambu1");
-            creaTessera(4, 1, 0, "Bambu1");
-            creaTessera(6, 1, 0, "Cerchio3");
-            creaTessera(8, 1, 0, "Cerchio3");
-
-            // Riga 2 (Y = 2)
-            creaTessera(2, 2, 0, "VentoEst");
-            creaTessera(4, 2, 0, "VentoEst");
-            creaTessera(6, 2, 0, "DragoRosso");
-            creaTessera(8, 2, 0, "DragoRosso");
-
-            // Riga 3 (Y = 3)
-            creaTessera(2, 3, 0, "VentoOvest");
-            creaTessera(4, 3, 0, "VentoOvest");
-            creaTessera(6, 3, 0, "DragoVerde");
-            creaTessera(8, 3, 0, "DragoVerde");
-
-            // Riga 4 (Y = 4)
-            creaTessera(2, 4, 0, "Fiore1");
-            creaTessera(4, 4, 0, "Fiore1");
-            creaTessera(6, 4, 0, "Cerchio1");
-            creaTessera(8, 4, 0, "Cerchio1");
-
-
-            // --- LIVELLO 1 (Il piano intermedio - 4 tessere al centro) ---
-            // Queste tessere si appoggiano sopra il livello 0 bloccandolo parzialmente
-            creaTessera(4, 2, 1, "Stagione1");
-            creaTessera(6, 2, 1, "Stagione1");
-            creaTessera(4, 3, 1, "Caratteri5");
-            creaTessera(6, 3, 1, "Caratteri5");
-
-
-            // --- LIVELLO 2 (La cima della piramide - 2 tessere) ---
-            // Le prime tessere da cui dovrai obbligatoriamente partire
-            creaTessera(5, 2, 2, "Caratteri9");
-            creaTessera(5, 3, 2, "Caratteri9");
+            creaTessera(2.5f, 1.5f, 0, "https://images.vexels.com/media/users/3/268432/isolated/preview/290f0ffb97b3fbaa139839f854eff6ee-mahjong-green-dragon-card.png");
+            creaTessera(5f, 3f, 0, "https://images.vexels.com/media/users/3/268432/isolated/preview/290f0ffb97b3fbaa139839f854eff6ee-mahjong-green-dragon-card.png");
+            creaTessera(7f, 5f, 0, "https://images.vexels.com/media/users/3/268473/isolated/preview/36cd41604a25199f095ccd260a693a9c-mahjong-six-of-dots-tile.png");
+            creaTessera(8f, 6f, 0, "https://images.vexels.com/media/users/3/268473/isolated/preview/36cd41604a25199f095ccd260a693a9c-mahjong-six-of-dots-tile.png");
+            
         }
         public class MahjongTile
         {
