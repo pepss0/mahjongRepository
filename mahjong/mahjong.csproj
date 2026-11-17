@@ -98,5 +98,8 @@
   <ItemGroup>
     <Resource Include="tessere\1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tessere\2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

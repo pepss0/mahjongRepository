@@ -21,9 +21,6 @@ namespace mahjong
     {
         private MahjongTile primaTesseraSelezionata = null;
 
-        List<MahjongTile> tiles = new List<MahjongTile>();
-
-
         public MainWindow()
         {
 
@@ -35,8 +32,8 @@ namespace mahjong
         public void creaTessera(float x, float y, int z, String immagine) //creazione di una tessera nella grafica
         {
             MahjongTile tessera = new MahjongTile(x, y, z, immagine);
-            tiles.Add(tessera);
-            
+
+
             // 1. Crea e carica la bitmap (come in precedenza)
             BitmapImage bitmap = new BitmapImage(new Uri(immagine, UriKind.Relative));
 
@@ -46,8 +43,8 @@ namespace mahjong
             Image imgControl = new Image()
             {
                 Source = bitmap,
-                Width = 50,
-                Height = 70,
+                Width = 60,
+                Height = 80,
                 Tag = tessera
             };
             /* imgControl.Source = bitmap;
@@ -64,16 +61,16 @@ namespace mahjong
                 Tag = tessera                
             };*/
 
-            //tessera.BottoneUI = MyButton;
+            tessera.ImageUI = imgControl;
 
             // MyButton.Click += Tessera_Click; //ricordati di questo, è l'eventio fatto al click, senza questo ovviamente non succedera nulla
             imgControl.MouseLeftButtonDown += ImgControl_MouseLeftButtonDown;
 
             //posizione nella grafica delle tessere nonche bottoni
-            Canvas.SetLeft(imgControl, x * 40);
+            Canvas.SetLeft(imgControl, (int)(x * 40));
             Canvas.SetTop(imgControl, y * 60);
             Canvas.SetZIndex(imgControl, z);
-            
+
 
             TavoloDiGioco.Children.Add(imgControl); //disegna nella grafica le tessere, nonche i bottoni creati
         }
@@ -106,7 +103,7 @@ namespace mahjong
                 }
                 else //ALTRIMENTI se non sono uguali in tutto e per tutto
                 {
-                    if (primaTesseraSelezionata.isEqual(tesseraCliccata)) //controllo il tipo, se le due tessere hanno stesso tipo allora le elimino
+                    if (primaTesseraSelezionata.isSameType(tesseraCliccata)) //controllo il tipo, se le due tessere hanno stesso tipo allora le elimino
                     {
                         TavoloDiGioco.Children.Remove(primaTesseraSelezionata.ImageUI); //cancellata del canvas
                         TavoloDiGioco.Children.Remove(tesseraCliccata.ImageUI);
@@ -138,8 +135,8 @@ namespace mahjong
 
             for (int i = 0; i < TavoloDiGioco.Children.Count; i++)
             {
-                Button b = (Button)TavoloDiGioco.Children[i];
-                MahjongTile altraTessera = (MahjongTile)b.Tag;
+                Image I = (Image)TavoloDiGioco.Children[i];
+                MahjongTile altraTessera = (MahjongTile)I.Tag;
 
                 if (t != altraTessera)
                 {
@@ -170,72 +167,24 @@ namespace mahjong
 
             return true;
         }
-        public void Tessera_Click(object sender, RoutedEventArgs e)
-        {
-            Button bottoneCliccato = (Button)sender; //prendiamo un bottone cliccato QUALSIASI
-
-            MahjongTile tesseraCliccata = (MahjongTile)bottoneCliccato.Tag; //in questo caso grazie al tag noi ci riferiamo esplicitamente a la tessera cliccata del bottone cliccato con le specifiche del tag
-
-            if (isFree(tesseraCliccata) == false)
-            {
-                return;
-            }
-
-
-            if (primaTesseraSelezionata == null) //se la prima tessera non è ancora stata cliccata
-            {
-                primaTesseraSelezionata = tesseraCliccata; //prima tessera sara la prima tessera cliccata
-                primaTesseraSelezionata.isSelezionata = true;
-
-            }
-            else //ALTRIMENTI
-
-                if (tesseraCliccata == primaTesseraSelezionata) //se la prima tessera è stata selezionata e la seconda (tesseraCliccata) è uguale in tutto e pertutto allora sono la stessa tessera, la deseleziono
-                {
-                    primaTesseraSelezionata.isSelezionata = false;
-                    primaTesseraSelezionata = null;
-                    tesseraCliccata.isSelezionata = false;
-                    tesseraCliccata = null;
-                }
-                else //ALTRIMENTI se non sono uguali in tutto e per tutto
-                {
-                    if (primaTesseraSelezionata.isEqual(tesseraCliccata)) //controllo il tipo, se le due tessere hanno stesso tipo allora le elimino
-                    {
-                        TavoloDiGioco.Children.Remove(primaTesseraSelezionata.ImageUI); //cancellata del canvas
-                        TavoloDiGioco.Children.Remove(tesseraCliccata.ImageUI);
-                        primaTesseraSelezionata.isSelezionata = false;
-                        primaTesseraSelezionata = null;
-                        tesseraCliccata.isSelezionata = false;
-                        tesseraCliccata = null;
-                    }
-                    else //se i tipi non sono uguali allora le deselezioni
-                    {
-                        primaTesseraSelezionata.isSelezionata = false;
-                        primaTesseraSelezionata = null;
-                        tesseraCliccata.isSelezionata = false;
-                        tesseraCliccata = null;
-                    }
-                }
-
-            if (TavoloDiGioco.Children.Count == 0)
-            {
-
-                MessageBox.Show("HAI VINTO!!");
-            }
-        }
-
 
         private void CreaLivelloDiTest()
         {
-            tiles.Clear();
-            creaTessera(2.5f, 1.5f, 0, "tessere/1.png");
+
+            creaTessera(1f, 1f, 0, "tessere/1.png");
+            creaTessera(1f, 2f, 0, "tessere/1.png");
+            creaTessera(2f, 1f, 0, "tessere/1.png");
+            creaTessera(2f, 2f, 0, "tessere/1.png");
+
+
+            creaTessera(1.5f, 1.5f, 1, "tessere/1.png");
+            creaTessera(2f, 2f, 2, "tessere/1.png");
             creaTessera(5f, 3f, 0, "tessere/1.png");
             creaTessera(7f, 5f, 0, "tessere/1.png");
             creaTessera(8f, 6f, 0, "tessere/1.png");
-            //creaTessera(5f, 3f, 0, "https://images.vexels.com/media/users/3/268432/isolated/preview/290f0ffb97b3fbaa139839f854eff6ee-mahjong-green-dragon-card.png");
-            //creaTessera(7f, 5f, 0, "https://images.vexels.com/media/users/3/268473/isolated/preview/36cd41604a25199f095ccd260a693a9c-mahjong-six-of-dots-tile.png");
-            //creaTessera(8f, 6f, 0, "https://images.vexels.com/media/users/3/268473/isolated/preview/36cd41604a25199f095ccd260a693a9c-mahjong-six-of-dots-tile.png");
-
+            creaTessera(6f, 2f, 0, "tessere/2.png");
+            creaTessera(2f, 6f, 0, "tessere/2.png");
+            
         }
         public class MahjongTile
         {
@@ -280,6 +229,7 @@ namespace mahjong
                 }
                 return true;
             }
+
 
         }
     }
