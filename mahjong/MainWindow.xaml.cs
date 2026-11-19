@@ -23,8 +23,9 @@ namespace mahjong
 
         public MainWindow()
         {
-
             InitializeComponent();
+            RestartButton.Click += RestartButton_Click;
+
             CreaLivelloDiTest();
 
         }
@@ -33,11 +34,8 @@ namespace mahjong
         {
             MahjongTile tessera = new MahjongTile(x, y, z, immagine);
 
-
             // 1. Crea e carica la bitmap (come in precedenza)
             BitmapImage bitmap = new BitmapImage(new Uri(immagine, UriKind.Relative));
-
-
 
             // 2. Crea un controllo Image e assegna la bitmap come sorgente
             Image imgControl = new Image()
@@ -47,27 +45,14 @@ namespace mahjong
                 Height = 80,
                 Tag = tessera
             };
-            /* imgControl.Source = bitmap;
-             imgControl.Width = 50;  // Opzionale: ridimensiona per adattarla al bottone
-             imgControl.Height = 70;*/
-
-            /*Button MyButton = new Button()
-            {
-                Width = 50,
-                Height = 60,
-                Background = Brushes.Transparent,
-                BorderBrush = Brushes.Transparent,
-                Content = imgControl,
-                Tag = tessera                
-            };*/
 
             tessera.ImageUI = imgControl;
 
-            // MyButton.Click += Tessera_Click; //ricordati di questo, è l'eventio fatto al click, senza questo ovviamente non succedera nulla
+            // imgControl.Click += Tessera_Click; //ricordati di questo, è l'eventio fatto al click, senza questo ovviamente non succedera nulla
             imgControl.MouseLeftButtonDown += ImgControl_MouseLeftButtonDown;
 
             //posizione nella grafica delle tessere nonche bottoni
-            Canvas.SetLeft(imgControl, (int)(x * 40));
+            Canvas.SetLeft(imgControl, x * 40);
             Canvas.SetTop(imgControl, y * 60);
             Canvas.SetZIndex(imgControl, z);
 
@@ -78,6 +63,9 @@ namespace mahjong
         private void ImgControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Image i = (Image)sender;
+
+
+
             MahjongTile tesseraCliccata = (MahjongTile)i.Tag; //in questo caso grazie al tag noi ci riferiamo esplicitamente a la tessera cliccata del bottone cliccato con le specifiche del tag
 
             if (isFree(tesseraCliccata) == false)
@@ -93,7 +81,7 @@ namespace mahjong
 
             }
             else //ALTRIMENTI
-
+            {
                 if (tesseraCliccata == primaTesseraSelezionata) //se la prima tessera è stata selezionata e la seconda (tesseraCliccata) è uguale in tutto e pertutto allora sono la stessa tessera, la deseleziono
                 {
                     primaTesseraSelezionata.isSelezionata = false;
@@ -121,10 +109,11 @@ namespace mahjong
                     }
                 }
 
-            if (TavoloDiGioco.Children.Count == 0)
-            {
+                if (TavoloDiGioco.Children.Count == 0)
+                {
 
-                MessageBox.Show("HAI VINTO!!");
+                    MessageBox.Show("HAI VINTO!!");
+                }
             }
         }
 
@@ -153,7 +142,7 @@ namespace mahjong
                         }
                     }
 
-                    if (t.getZ() + 1 == altraTessera.getZ() && t.getY() == altraTessera.getY() && t.getX() == altraTessera.getX())
+                    if (t.getZ() + 1 == altraTessera.getZ() && ((t.getY() == altraTessera.getY() || t.getY() == altraTessera.getY() + 0.5f || t.getY() == altraTessera.getY() - 0.5f) && (t.getX() == altraTessera.getX() || t.getX() == altraTessera.getX() + 0.5f || t.getX() == altraTessera.getX() - 0.5f)))
                     {
                         return false;
                     }
@@ -175,16 +164,12 @@ namespace mahjong
             creaTessera(1f, 2f, 0, "tessere/1.png");
             creaTessera(2f, 1f, 0, "tessere/1.png");
             creaTessera(2f, 2f, 0, "tessere/1.png");
+            creaTessera(2f, 3f, 0, "tessere/3.png");
+            creaTessera(3f, 3f, 0, "tessere/3.png");
 
 
-            creaTessera(1.5f, 1.5f, 1, "tessere/1.png");
-            creaTessera(2f, 2f, 2, "tessere/1.png");
-            creaTessera(5f, 3f, 0, "tessere/1.png");
-            creaTessera(7f, 5f, 0, "tessere/1.png");
-            creaTessera(8f, 6f, 0, "tessere/1.png");
-            creaTessera(6f, 2f, 0, "tessere/2.png");
-            creaTessera(2f, 6f, 0, "tessere/2.png");
-            
+
+
         }
         public class MahjongTile
         {
@@ -231,6 +216,13 @@ namespace mahjong
             }
 
 
+        }
+
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        {
+            TavoloDiGioco.Children.Clear();
+            primaTesseraSelezionata = null;
+            CreaLivelloDiTest();
         }
     }
 }
