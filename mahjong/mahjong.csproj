@@ -99,10 +99,22 @@
     <Resource Include="tessere\1.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="tessere\3.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="tessere\2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="tessere\3.png" />
+    <Resource Include="tessere\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tessere\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tessere\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tessere\7.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

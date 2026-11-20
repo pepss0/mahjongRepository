@@ -41,8 +41,8 @@ namespace mahjong
             Image imgControl = new Image()
             {
                 Source = bitmap,
-                Width = 60,
-                Height = 80,
+                Width = 70,
+                Height = 90,
                 Tag = tessera
             };
 
@@ -64,8 +64,6 @@ namespace mahjong
         {
             Image i = (Image)sender;
 
-
-
             MahjongTile tesseraCliccata = (MahjongTile)i.Tag; //in questo caso grazie al tag noi ci riferiamo esplicitamente a la tessera cliccata del bottone cliccato con le specifiche del tag
 
             if (isFree(tesseraCliccata) == false)
@@ -73,11 +71,11 @@ namespace mahjong
                 return;
             }
 
-
             if (primaTesseraSelezionata == null) //se la prima tessera non è ancora stata cliccata
             {
                 primaTesseraSelezionata = tesseraCliccata; //prima tessera sara la prima tessera cliccata
                 primaTesseraSelezionata.isSelezionata = true;
+                primaTesseraSelezionata.ImageUI.Opacity = 0.5;
 
             }
             else //ALTRIMENTI
@@ -164,8 +162,46 @@ namespace mahjong
             creaTessera(1f, 2f, 0, "tessere/1.png");
             creaTessera(2f, 1f, 0, "tessere/1.png");
             creaTessera(2f, 2f, 0, "tessere/1.png");
-            creaTessera(2f, 3f, 0, "tessere/3.png");
-            creaTessera(3f, 3f, 0, "tessere/3.png");
+            creaTessera(3f, 2f, 0, "tessere/1.png");
+            creaTessera(2f, 3f, 0, "tessere/1.png");
+
+            creaTessera(7.5f, 3.5f, 0, "tessere/5.png");
+            creaTessera(3.5f, 6.5f, 0, "tessere/5.png");
+            creaTessera(5.5f, 4.5f, 0, "tessere/5.png");
+            creaTessera(3.5f, 3.5f, 0, "tessere/5.png");
+
+            creaTessera(5.5f, 6.5f, 0, "tessere/4.png");
+            creaTessera(2.5f, 3.5f, 2, "tessere/4.png");
+            creaTessera(3.5f, 6.5f, 2, "tessere/4.png");
+            creaTessera(1.5f, 3.5f, 0, "tessere/4.png");
+
+            creaTessera(4.5f, 7.5f, 1, "tessere/6.png");
+            creaTessera(1.5f, 5.5f, 1, "tessere/6.png");
+
+
+            creaTessera(3.5f, 5.5f, 0, "tessere/7.png");
+            creaTessera(1.5f, 15.5f, 0, "tessere/7.png");
+            creaTessera(8.5f, 5.5f, 2, "tessere/7.png");
+            creaTessera(1.5f, 15.5f, 1, "tessere/7.png");
+            creaTessera(3.5f, 3.5f, 1, "tessere/7.png");
+            creaTessera(5.5f, 10.5f, 2, "tessere/7.png");
+            creaTessera(3.5f, 2.5f, 0, "tessere/7.png");
+            creaTessera(1.5f,4.5f, 0, "tessere/7.png");
+
+            creaTessera(1.5f, 1.5f, 1, "tessere/3.png");
+            creaTessera(2.5f, 1.5f, 1, "tessere/3.png");
+            creaTessera(1.5f, 2.5f, 1, "tessere/3.png");
+            creaTessera(2.5f, 2.5f, 1, "tessere/3.png");
+            creaTessera(3.5f, 2.5f, 1, "tessere/3.png");
+            creaTessera(2.5f, 3.5f, 1, "tessere/3.png");
+
+
+
+
+            creaTessera(1f+1, 1f+1, 2, "tessere/1.png");
+            creaTessera(1f+1, 2f+1, 2, "tessere/1.png");
+            creaTessera(2f+1, 1f+1, 2, "tessere/1.png");
+            creaTessera(2f+1, 2f+1, 2, "tessere/1.png");
 
 
 
